@@ -3,6 +3,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -12,16 +13,19 @@ int main() {
     string stringLineData;
     int numrow;
     int numcol;
+    string currentChar;
     int maxrow = 0;
     int maxcol = 0;
 
     cout << "starting" << endl;
 
+    int counter = 0;
+        //finds the amount of rows and colums
     if (dataFile.is_open()) {
         while (!dataFile.eof()) {
-            getline(dataFile, stringLineData);
-            dataLine.str(stringLineData);
-            dataLine >> numcol >>numrow;
+            dataFile >> numcol;
+            dataFile >> currentChar;
+            dataFile >> numrow;
 
             if (numcol > maxcol) {
                 maxcol = numcol;
@@ -29,14 +33,17 @@ int main() {
             if (numrow > maxrow) {
                 maxrow = numrow;
             }
-            cout << maxcol << " " << maxrow << endl;
+
+            cout << maxcol << " " << maxrow << " " << counter++ << endl;
         }
-        cout << numcol << endl << numrow;
     }else {
         cout << "file failed to open" << endl;
         return 0;
     }
 
+        //create a 2d vector to put in the characters
+        vector<vector<string>> characterMap;
+        characterMap.resize(maxrow, vector<string>(maxcol, " "));
 
 
 
