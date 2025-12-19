@@ -1,10 +1,8 @@
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
@@ -18,9 +16,7 @@ int main() {
     int maxrow = 0;
     int maxcol = 0;
 
-    cout << "starting" << endl;
 
-    int counter = 0;
         //finds the amount of rows and colums
     if (dataFile.is_open()) {
         while (!dataFile.eof()) {
@@ -35,7 +31,6 @@ int main() {
                 maxrow = numrow;
             }
 
-            // cout << maxcol << " " << maxrow << " " << counter++ << endl;
         }
     }else {
         cout << "file failed to open" << endl;
@@ -49,43 +44,43 @@ int main() {
     }
 
         //fill aray with spaces
-
-        for(int i = 0; i < maxrow + 1; i++){
-                   for (int j = 0; j < maxcol + 1; j++) {
-                       characterArray[i][j] = " ";
-                   }
+    for(int i = 0; i < maxrow + 1; i++){
+               for (int j = 0; j < maxcol + 1; j++) {
+                   characterArray[i][j] = " ";
                }
+           }
 
 
 
-        //populate the vector with value from my data
-        dataFile.clear();
-        dataFile.seekg(0, ios::beg);
+        //populate the array with value from my data
+    dataFile.clear();
+    dataFile.seekg(0, ios::beg);
 
-        while (!dataFile.eof()) {
-            dataFile >> numcol;
-            dataFile >> currentChar;
-            dataFile >> numrow;
+    while (!dataFile.eof()) {
+        dataFile >> numcol;
+        dataFile >> currentChar;
+        dataFile >> numrow;
 
-            characterArray[numrow][numcol] = currentChar;
+        characterArray[numrow][numcol] = currentChar;
+    }
 
+
+
+        //print array
+    for(int i = 0; i < maxrow + 1; i++){
+        for (int j = 0; j < maxcol + 1; j++) {
+            cout << characterArray[i][j];
         }
-
-            //print array
-        for(int i = 0; i < maxrow + 1; i++){
-            for (int j = 0; j < maxcol + 1; j++) {
-                cout << characterArray[i][j];
-            }
             cout << endl;
         }
 
 
-            //delete memory for dynamically created arrays
-
-        for (int i = 0; i < maxrow + 1; ++i) {
-            delete[] characterArray[i];
-        }
-        delete[] characterArray;
+        //delete memory for dynamically created arrays and close file
+    for (int i = 0; i < maxrow + 1; ++i) {
+        delete[] characterArray[i];
+    }
+    delete[] characterArray;
+    dataFile.close();
 
     return 0;
 }
