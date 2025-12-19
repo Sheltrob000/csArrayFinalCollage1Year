@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -34,7 +35,7 @@ int main() {
                 maxrow = numrow;
             }
 
-            cout << maxcol << " " << maxrow << " " << counter++ << endl;
+            // cout << maxcol << " " << maxrow << " " << counter++ << endl;
         }
     }else {
         cout << "file failed to open" << endl;
@@ -42,10 +43,49 @@ int main() {
     }
 
         //create a 2d vector to put in the characters
-        vector<vector<string>> characterMap;
-        characterMap.resize(maxrow, vector<string>(maxcol, " "));
+    string** characterArray = new string*[maxrow + 1];
+    for (int i = 0; i < maxrow + 1; ++i) {
+        characterArray[i] = new string[maxcol + 1];
+    }
+
+        //fill aray with spaces
+
+        for(int i = 0; i < maxrow + 1; i++){
+                   for (int j = 0; j < maxcol + 1; j++) {
+                       characterArray[i][j] = " ";
+                   }
+               }
 
 
+
+        //populate the vector with value from my data
+        dataFile.clear();
+        dataFile.seekg(0, ios::beg);
+
+        while (!dataFile.eof()) {
+            dataFile >> numcol;
+            dataFile >> currentChar;
+            dataFile >> numrow;
+
+            characterArray[numrow][numcol] = currentChar;
+
+        }
+
+            //print array
+        for(int i = 0; i < maxrow + 1; i++){
+            for (int j = 0; j < maxcol + 1; j++) {
+                cout << characterArray[i][j];
+            }
+            cout << endl;
+        }
+
+
+            //delete memory for dynamically created arrays
+
+        for (int i = 0; i < maxrow + 1; ++i) {
+            delete[] characterArray[i];
+        }
+        delete[] characterArray;
 
     return 0;
 }
