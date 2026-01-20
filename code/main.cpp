@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    ifstream dataFile("../data/data");
+    ifstream dataFile("data/data");
     istringstream dataLine;
     string stringLineData;
     int numrow;
